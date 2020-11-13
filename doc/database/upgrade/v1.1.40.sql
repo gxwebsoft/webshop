@@ -1,6 +1,6 @@
 
 
-CREATE TABLE `yoshop_wxapp_live_room` (
+CREATE TABLE `webshop_wxapp_live_room` (
   `room_id` int(11) unsigned NOT NULL COMMENT '直播间id',
   `room_name` varchar(200) NOT NULL DEFAULT '' COMMENT '直播间名称',
   `cover_img` varchar(255) DEFAULT '' COMMENT '分享卡片封面',
@@ -19,10 +19,10 @@ CREATE TABLE `yoshop_wxapp_live_room` (
 
 
 
-INSERT INTO `yoshop_store_access` (`access_id`, `name`, `url`, `parent_id`, `sort`, `create_time`, `update_time`) VALUES ('10462', '小程序直播', 'apps.live', '10074', '125', '1585120375', '1585120375');
-INSERT INTO `yoshop_store_access` (`access_id`, `name`, `url`, `parent_id`, `sort`, `create_time`, `update_time`) VALUES ('10463', '直播间管理', 'apps.live.room/index', '10462', '100', '1585120404', '1585120404');
-INSERT INTO `yoshop_store_access` (`access_id`, `name`, `url`, `parent_id`, `sort`, `create_time`, `update_time`) VALUES ('10464', '同步刷新', 'apps.live.room/refresh', '10463', '100', '1585120404', '1585120404');
-INSERT INTO `yoshop_store_access` (`access_id`, `name`, `url`, `parent_id`, `sort`, `create_time`, `update_time`) VALUES ('10465', '设置置顶状态', 'apps.live.room/refresh', '10463', '100', '1585120404', '1585120404');
+INSERT INTO `webshop_store_access` (`access_id`, `name`, `url`, `parent_id`, `sort`, `create_time`, `update_time`) VALUES ('10462', '小程序直播', 'apps.live', '10074', '125', '1585120375', '1585120375');
+INSERT INTO `webshop_store_access` (`access_id`, `name`, `url`, `parent_id`, `sort`, `create_time`, `update_time`) VALUES ('10463', '直播间管理', 'apps.live.room/index', '10462', '100', '1585120404', '1585120404');
+INSERT INTO `webshop_store_access` (`access_id`, `name`, `url`, `parent_id`, `sort`, `create_time`, `update_time`) VALUES ('10464', '同步刷新', 'apps.live.room/refresh', '10463', '100', '1585120404', '1585120404');
+INSERT INTO `webshop_store_access` (`access_id`, `name`, `url`, `parent_id`, `sort`, `create_time`, `update_time`) VALUES ('10465', '设置置顶状态', 'apps.live.room/refresh', '10463', '100', '1585120404', '1585120404');
 
 
 
