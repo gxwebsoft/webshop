@@ -1,8 +1,0 @@
-/* wxParse.wxss */
-@import "/wxParse/wxParse.wxss";
-
-/* 富文本 */
-
-.diy-richText {
-  font-size: 28rpx;
-}
