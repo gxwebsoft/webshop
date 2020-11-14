@@ -13,10 +13,10 @@
                                     默认上传方式
                                 </label>
                                 <div class="am-u-sm-9">
-                                    <label class="am-radio-inline">
-                                        <input type="radio" name="storage[default]" value="local" data-am-ucheck
-                                            <?= $values['default'] === 'local' ? 'checked' : '' ?>> 本地 (不推荐)
-                                    </label>
+<!--                                    <label class="am-radio-inline" style="display: none">-->
+<!--                                        <input type="radio" name="storage[default]" value="local" data-am-ucheck-->
+<!--                                            --><?//= $values['default'] === 'local' ? 'checked' : '' ?><!-- 本地 (不推荐)-->
+<!--                                    </label>-->
                                     <label class="am-radio-inline">
                                         <input type="radio" name="storage[default]" value="qiniu" data-am-ucheck
                                             <?= $values['default'] === 'qiniu' ? 'checked' : '' ?>> 七牛云存储

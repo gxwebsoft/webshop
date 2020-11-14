@@ -46,7 +46,7 @@
                                     <div class="am-form-group am-fl">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form">
                                             <input type="text" class="am-form-field" name="nickName"
-                                                   placeholder="请输入微信昵称"
+                                                   placeholder="请输入微信昵称|手机号码"
                                                    value="<?= $request->get('nickName') ?>">
                                             <div class="am-input-group-btn">
                                                 <button class="am-btn am-btn-default am-icon-search"
@@ -66,6 +66,7 @@
                                 <th>用户ID</th>
                                 <th>微信头像</th>
                                 <th>微信昵称</th>
+                                <th>手机号码</th>
                                 <th>用户余额</th>
                                 <th>可用积分</th>
                                 <th>会员等级</th>
@@ -88,6 +89,7 @@
                                         </a>
                                     </td>
                                     <td class="am-text-middle"><?= $item['nickName'] ?></td>
+                                    <td class="am-text-middle"><?= $item['mobile']?></td>
                                     <td class="am-text-middle"><?= $item['balance'] ?></td>
                                     <td class="am-text-middle"><?= $item['points'] ?></td>
                                     <td class="am-text-middle">
@@ -117,6 +119,7 @@
                                                 <a class="j-grade tpl-table-black-operation-default"
                                                    href="javascript:void(0);"
                                                    data-id="<?= $item['user_id'] ?>"
+                                                   data-gradeid="<?= $item['grade_id']?>"
                                                    title="修改会员等级">
                                                     <i class="iconfont icon-grade-o"></i>
                                                     会员等级
@@ -161,7 +164,7 @@
                                 </tr>
                             <?php endforeach; else: ?>
                                 <tr>
-                                    <td colspan="12" class="am-text-center">暂无记录</td>
+                                    <td colspan="13" class="am-text-center">暂无记录</td>
                                 </tr>
                             <?php endif; ?>
                             </tbody>
@@ -192,9 +195,10 @@
                         <select name="grade[grade_id]"
                                 data-am-selected="{btnSize: 'sm', placeholder: '请选择会员等级'}">
                             <option value="0">无等级</option>
+                            <?php $grade = '{{ gradeid }}';?>
                             <?php foreach ($gradeList as $item): ?>
                                 <option value="<?= $item['grade_id'] ?>"
-                                    <?= $grade == $item['grade_id'] ? 'selected' : '' ?>><?= $item['name'] ?>
+                                         {{ gradeid=="<?=$item['grade_id']?>" ? 'selected' : '' }}><?= $item['name'] ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -337,6 +341,7 @@
          */
         $('.j-recharge').on('click', function () {
             var $tabs, data = $(this).data();
+            console.log(data)
             $.showModal({
                 title: '用户充值'
                 , area: '460px'
@@ -400,7 +405,7 @@
                     layer.close(index);
                 });
             }
-            $dropdown.dropdown('close');
+            $dropdwn.dropdown('close');
         });
 
         // 删除元素

@@ -105,13 +105,16 @@ class Setting extends BaseModel
                 'describe' => '商城设置',
                 'values' => [
                     // 商城名称
-                    'name' => $storeName ?: '萤火小程序商城',
+                    'name' => $storeName ?: '应用名称',
                     // 配送方式
                     'delivery_type' => array_keys(DeliveryTypeEnum::data()),
                     // 快递100
                     'kuaidi100' => [
                         'customer' => '',
                         'key' => '',
+                    ],
+                    'fh' => [
+                        'key' => '12:00'
                     ]
                 ],
             ],
@@ -133,14 +136,14 @@ class Setting extends BaseModel
                 'key' => 'storage',
                 'describe' => '上传设置',
                 'values' => [
-                    'default' => 'local',
+                    'default' => 'qiniu',
                     'engine' => [
                         'local' => [],
                         'qiniu' => [
-                            'bucket' => '',
-                            'access_key' => '',
-                            'secret_key' => '',
-                            'domain' => 'http://'
+                            'bucket' => 'cn-wsdns-console',
+                            'access_key' => 'vZk0Uef373e7aET6LbN-oAc4ekdN_PYUdxnQP16p',
+                            'secret_key' => 'vL0S82s0Dj8jSQdDd7JJL65LLzU0kz0HPlLvqdjc',
+                            'domain' => 'http://console.cdn.wsdns.cn'
                         ],
                         'aliyun' => [
                             'bucket' => '',
@@ -168,7 +171,7 @@ class Setting extends BaseModel
                         'aliyun' => [
                             'AccessKeyId' => '',
                             'AccessKeySecret' => '',
-                            'sign' => '萤火科技',
+                            'sign' => '南宁网宿科技',
                             'order_pay' => [
                                 'is_enable' => '0',
                                 'template_code' => '',

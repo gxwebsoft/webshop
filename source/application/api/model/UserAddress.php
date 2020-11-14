@@ -48,6 +48,15 @@ class UserAddress extends UserAddressModel
             $regionId = Region::getIdByName($region[2], 3, $cityId);
             // 验证城市ID是否合法
             if (!$this->checkCityId($cityId)) return false;
+            // 保存经纬度
+            $latitude = '';
+            $longitude = '';
+            if (!empty($data['latitude'])){
+                $latitude = $data['latitude'];
+            }
+            if (!empty($data['longitude'])){
+                $longitude = $data['longitude'];
+            }
             // 添加收货地址
             $this->allowField(true)->save([
                 'name' => $data['name'],
@@ -57,6 +66,8 @@ class UserAddress extends UserAddressModel
                 'region_id' => $regionId,
                 'detail' => $data['detail'],
                 'district' => ($regionId === 0 && !empty($region[2])) ? $region[2] : '',
+                'latitude' => $latitude,
+                'longitude' => $longitude,
                 'user_id' => $user['user_id'],
                 'wxapp_id' => self::$wxapp_id
             ]);
@@ -80,6 +91,15 @@ class UserAddress extends UserAddressModel
         $regionId = Region::getIdByName($region[2], 3, $cityId);
         // 验证城市ID是否合法
         if (!$this->checkCityId($cityId)) return false;
+        // 保存经纬度
+        $latitude = '';
+        $longitude = '';
+        if (!empty($data['latitude'])){
+            $latitude = $data['latitude'];
+        }
+        if (!empty($data['longitude'])){
+            $longitude = $data['longitude'];
+        }
         // 更新收货地址
         return $this->allowField(true)->save([
                 'name' => $data['name'],
@@ -89,6 +109,8 @@ class UserAddress extends UserAddressModel
                 'region_id' => $regionId,
                 'detail' => $data['detail'],
                 'district' => ($regionId === 0 && !empty($region[2])) ? $region[2] : '',
+                'latitude' => $latitude,
+                'longitude' => $longitude,
             ]) !== false;
     }
 

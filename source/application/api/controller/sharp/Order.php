@@ -4,7 +4,7 @@ namespace app\api\controller\sharp;
 
 use app\api\controller\Controller;
 use app\api\model\sharp\Setting as SettingModel;
-use app\api\service\order\Checkout as CheckoutModel;
+use app\api\service\order\Checkout1 as CheckoutModel;
 use app\api\service\sharp\Active as ActiveService;
 use app\common\enum\order\OrderSource as OrderSourceEnum;
 use app\common\library\Lock;

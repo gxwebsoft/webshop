@@ -159,11 +159,11 @@ html, body {
 }
 
 .login-form {
-    margin: 45px 0 30px;
+    margin: 35px 0 30px;
 }
 
 .login-form .form-group {
-    margin: 30px 0;
+    margin: 20px 0;
 }
 
 .login-form input {
@@ -204,7 +204,7 @@ html, body {
     transition: border .2s linear, color .2s linear, width .2s linear, background-color .2s linear;
     -webkit-font-smoothing: subpixel-antialiased;
     color: #fff;
-    background-color: #ff5060;
+    background-color: #1296db;
     /*border-color: #ff5060;*/
     border: 1px solid transparent;
     cursor: pointer;
@@ -213,15 +213,14 @@ html, body {
 
 .login-form button[disabled], .login-form button[disabled]:hover {
     color: #fff;
-    background-color: #a2caee;
-    border-color: #a2caee;
+    background-color: #01a3c1;
+    border-color: #02a9c1;
     cursor: not-allowed;
     opacity: .65;
 }
 
 .login-form button:hover {
-    background-color: #fd717e;
-    border-color: #fd717e;
+    background-color: #18a0db;;
 }
 
 @media screen and (max-width: 404px) {
@@ -230,3 +229,6 @@ html, body {
         padding: 50px 30px 40px;
     }
 }
+.register{
+    color: #999999; font-size: 14px; text-align: center; line-height: 3rem;}
+.register a:link,.register a:visited{ color: #ff5060;text-decoration: none;}

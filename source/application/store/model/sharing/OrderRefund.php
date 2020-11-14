@@ -70,7 +70,7 @@ class OrderRefund extends OrderRefundModel
             $this->error = '请选择退货地址';
             return false;
         }
-        $this->transaction(function ($data) {
+        $this->transaction(function () use ($data) {
             // 拒绝申请, 标记售后单状态为已拒绝
             $data['is_agree'] == 20 && $data['status'] = 10;
             // 同意换货申请, 标记售后单状态为已完成

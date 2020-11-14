@@ -37,6 +37,12 @@
                                                 一级分类 (小图)
                                             </label>
                                             <label class="am-radio-inline">
+                                                <input type="radio" name="category[category_style]" value="12"
+                                                       data-am-ucheck
+                                                    <?= $model['category_style'] == 12 ? 'checked' : '' ?>>
+                                                一级分类 (左侧分类+商品)
+                                            </label>
+                                            <label class="am-radio-inline">
                                                 <input type="radio" name="category[category_style]" value="20"
                                                        data-am-ucheck
                                                     <?= $model['category_style'] == 20 ? 'checked' : '' ?>>

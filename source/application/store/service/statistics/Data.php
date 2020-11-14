@@ -61,4 +61,15 @@ class Data extends Basics
         return (new UserExpendRanking)->getUserExpendRanking();
     }
 
+    /**
+     * 商品销售榜(全部数据)
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getAllGoodsRanking()
+    {
+        return (new GoodsRanking)->getAllGoodsRanking();
+    }
 }

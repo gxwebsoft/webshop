@@ -215,7 +215,18 @@ class Cart
     public function sub($goodsId, $goodsSkuId)
     {
         $index = "{$goodsId}_{$goodsSkuId}";
-        $this->cart[$index]['goods_num'] > 1 && $this->cart[$index]['goods_num']--;
+        return $this->cart[$index]['goods_num'] > 1 && $this->cart[$index]['goods_num']--;
+    }
+
+    /**
+     * 减少购物车中某商品数量（可以减到0）
+     * @param int $goodsId
+     * @param string $goodsSkuId
+     */
+    public function sub0($goodsId, $goodsSkuId)
+    {
+        $index = "{$goodsId}_{$goodsSkuId}";
+        return $this->cart[$index]['goods_num'] > -1 && $this->cart[$index]['goods_num']--;
     }
 
     /**

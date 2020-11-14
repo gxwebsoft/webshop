@@ -4,6 +4,7 @@ namespace app\store\controller\goods;
 
 use app\store\controller\Controller;
 use app\store\model\Category as CategoryModel;
+use think\Db;
 
 /**
  * 商品分类
@@ -19,7 +20,9 @@ class Category extends Controller
     public function index()
     {
         $model = new CategoryModel;
-        $list = $model->getCacheTree();
+        $list = $model->catTree();
+//halt($list);
+//        halt($list);
         return $this->fetch('index', compact('list'));
     }
 
@@ -33,6 +36,7 @@ class Category extends Controller
     public function delete($category_id)
     {
         $model = CategoryModel::get($category_id);
+
         if (!$model->remove($category_id)) {
             return $this->renderError($model->getError() ?: '删除失败');
         }
@@ -48,7 +52,9 @@ class Category extends Controller
         $model = new CategoryModel;
         if (!$this->request->isAjax()) {
             // 获取所有地区
-            $list = $model->getCacheTree();
+//            $list = $model->getCacheTree();
+//            $model = new CategoryModel;
+            $list = $model->catTree();
             return $this->fetch('add', compact('list'));
         }
         // 新增记录
@@ -70,7 +76,8 @@ class Category extends Controller
         $model = CategoryModel::get($category_id, ['image']);
         if (!$this->request->isAjax()) {
             // 获取所有地区
-            $list = $model->getCacheTree();
+//            $list = $model->getCacheTree();
+            $list = $model->catTree();
             return $this->fetch('edit', compact('model', 'list'));
         }
         // 更新记录

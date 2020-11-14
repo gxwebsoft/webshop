@@ -55,6 +55,7 @@ class Controller extends \think\Controller
     {
         // 商家登录信息
         $this->store = Session::get('yoshop_store');
+//        pre($this->store);
         // 当前路由信息
         $this->getRouteinfo();
         // 验证登录状态
@@ -77,9 +78,11 @@ class Controller extends \think\Controller
         if ($this->routeUri === 'index/index') {
             return true;
         }
+
         if (!Auth::getInstance()->checkPrivilege($this->routeUri)) {
             throw new BaseException(['msg' => '很抱歉，没有访问权限']);
         }
+
         return true;
     }
 
@@ -131,7 +134,7 @@ class Controller extends \think\Controller
     {
         static $menus = [];
         if (empty($menus)) {
-            $menus = Menus::getInstance()->getMenus($this->routeUri, $this->group);
+            $menus = Menus::getInstance()->getMenus($this->routeUri, $this->group, $this->getWxappId());
         }
         return $menus;
     }

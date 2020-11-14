@@ -11,6 +11,22 @@
                         <form class="toolbar-form" action="">
                             <input type="hidden" name="s" value="/<?= $request->pathinfo() ?>">
                             <div class="am-u-sm-12 am-u-md-3">
+                                <div class="am-form-group am-btn-group-xs">
+                                    <a class="am-btn am-btn-default am-btn-secondary"
+                                       href="<?= url('goods/toexport') ?>">
+                                        <i class="iconfont icon-daoru am-margin-right-xs"></i>商品导出
+                                    </a>
+                                    <a class="am-btn am-btn-default am-btn-secondary"
+                                       href="<?= url('goods/import') ?>">
+                                        <i class="iconfont icon-daochu am-margin-right-xs"></i>商品导入
+                                    </a>
+                                </div>
+<!--                                <div class="am-form-group am-btn-group-xs" >-->
+<!--                                    <a class="am-btn am-btn-default am-btn-success"-->
+<!--                                       href="javascript:void(0)">-->
+<!--                                        <i class="iconfont icon-daochu am-margin-right-xs"></i>一键复制商品-->
+<!--                                    </a>-->
+<!--                                </div>-->
                                 <div class="am-form-group">
                                     <?php if (checkPrivilege('goods/add')): ?>
                                         <div class="am-btn-group am-btn-group-xs">
@@ -29,16 +45,21 @@
                                         <select name="category_id"
                                                 data-am-selected="{searchBox: 1, btnSize: 'sm',  placeholder: '商品分类', maxHeight: 400}">
                                             <option value=""></option>
-                                            <?php if (isset($catgory)): foreach ($catgory as $first): ?>
-                                                <option value="<?= $first['category_id'] ?>"
-                                                    <?= $category_id == $first['category_id'] ? 'selected' : '' ?>>
-                                                    <?= $first['name'] ?></option>
-                                                <?php if (isset($first['child'])): foreach ($first['child'] as $two): ?>
-                                                    <option value="<?= $two['category_id'] ?>"
-                                                        <?= $category_id == $two['category_id'] ? 'selected' : '' ?>>
-                                                        　　<?= $two['name'] ?></option>
-                                                <?php endforeach; endif; ?>
-                                            <?php endforeach; endif; ?>
+                                            <?php foreach ($catgory as $vo): ?>
+                                                <option value="<?= $vo['category_id'] ?>">
+                                                    <?=$vo['name'] ?>
+                                                </option>
+                                            <?php endforeach; ?>
+<!--                                            --><?php //if (isset($catgory)): foreach ($catgory as $first): ?>
+<!--                                                <option value="--><?//= $first['category_id'] ?><!--"-->
+<!--                                                    --><?//= $category_id == $first['category_id'] ? 'selected' : '' ?><!-->-->
+<!--                                                    --><?//= $first['name'] ?><!--</option>-->
+<!--                                                --><?php //if (isset($first['child'])): foreach ($first['child'] as $two): ?>
+<!--                                                    <option value="--><?//= $two['category_id'] ?><!--"-->
+<!--                                                        --><?//= $category_id == $two['category_id'] ? 'selected' : '' ?><!-->-->
+<!--                                                        　　--><?//= $two['name'] ?><!--</option>-->
+<!--                                                --><?php //endforeach; endif; ?>
+<!--                                            --><?php //endforeach; endif; ?>
                                         </select>
                                     </div>
                                     <div class="am-form-group am-fl">
@@ -75,6 +96,7 @@
                          tpl-table-black am-text-nowrap">
                             <thead>
                             <tr>
+                                <th>选择商品</th>
                                 <th>商品ID</th>
                                 <th>商品图片</th>
                                 <th>商品名称</th>
@@ -89,6 +111,7 @@
                             <tbody>
                             <?php if (!$list->isEmpty()): foreach ($list as $item): ?>
                                 <tr>
+                                    <td class="am-text-middle"><input type="checkbox" class="check" value="<?= $item['goods_id'] ?>"/></td>
                                     <td class="am-text-middle"><?= $item['goods_id'] ?></td>
                                     <td class="am-text-middle">
                                         <a href="<?= $item['image'][0]['file_path'] ?>"
@@ -183,6 +206,45 @@
         // 删除元素
         var url = "<?= url('goods/delete') ?>";
         $('.item-delete').delete('goods_id', url);
+
+        var goods_id=[];
+        $('.check').click(function () {
+
+
+        $(this).each(function () {
+             goods_id.push($(this).val());
+
+        })
+
+        })
+
+        // $('.am-btn').click(function () {
+        //
+        //     $.ajax( {
+        //         type: "post",
+        //         url: "{{:url('goods/copymore')}}",  //数据传输的控制器方法
+        //         data: {
+        //
+        //             goods_id:goods_id,
+        //
+        //
+        //         },
+        //         success: function (data) {
+        //             if(data.status==1) {
+        //                 layer.msg(data.msg, {
+        //                     time: 1500,
+        //                     end: function () {
+        //
+        //                         location.reload();
+        //                     }
+        //                 })
+        //             }
+        //         else {
+        //             layer.msg( '添加失败');
+        // }
+        //             }
+        //     })
+        // })
 
     });
 </script>

@@ -26,6 +26,7 @@ class User extends Controller
         $list = $model->getList($nickName, $gender, $grade);
         // 会员等级列表
         $gradeList = GradeModel::getUsableList();
+//        pre($gradeList->toArray());
         return $this->fetch('index', compact('list', 'gradeList'));
     }
 

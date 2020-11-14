@@ -120,6 +120,7 @@
                      * @param index
                      */
                     onEditorSelectImage: function (source, index) {
+                        console.log(JSON.stringify(source) + index)
                         $.fileLibrary({
                             type: 'image',
                             done: function (images) {

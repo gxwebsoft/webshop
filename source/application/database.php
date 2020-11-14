@@ -3,9 +3,9 @@
 // 数据库配置
 $config = [
     'host' => '127.0.0.1',
-    'database' => 'yoshop_pro',
-    'username' => 'root',
-    'password' => 'root',
+    'database' => 'developer',
+    'username' => 'developer',
+    'password' => 'fp6VqwVFqw',
     'port' => '3306',
     'charset' => 'utf8',
 ];
@@ -30,7 +30,7 @@ return [
     // 数据库编码默认采用utf8
     'charset' => $config['charset'],
     // 数据库表前缀
-    'prefix' => 'yoshop_',
+    'prefix' => 'webshop_',
     // 数据库调试模式
     'debug' => true,
     // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)

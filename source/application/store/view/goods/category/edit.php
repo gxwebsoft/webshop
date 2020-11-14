@@ -13,6 +13,8 @@
                                 <div class="am-u-sm-9 am-u-end">
                                     <input type="text" class="tpl-form-input" name="category[name]"
                                            value="<?= $model['name'] ?>" required>
+                                    <input type="hidden" class="tpl-form-input" name="category[category_id]"
+                                           value="<?= $model['category_id'] ?>" required>
                                 </div>
                             </div>
                             <div class="am-form-group">
@@ -21,11 +23,24 @@
                                     <select name="category[parent_id]"
                                             data-am-selected="{searchBox: 1, btnSize: 'sm'}">
                                         <option value="0">顶级分类</option>
-                                        <?php if (isset($list)): foreach ($list as $first): ?>
-                                            <option value="<?= $first['category_id'] ?>"
-                                                <?= $model['parent_id'] == $first['category_id'] ? 'selected' : '' ?>>
-                                                <?= $first['name'] ?></option>
-                                        <?php endforeach; endif; ?>
+                                        <?php foreach ($list as $vo): ?>
+                                            <option value="<?= $vo['category_id'] ?>" <?= $model['parent_id']==$vo['category_id']?'selected':'';?>>
+                                                <?= $vo['name'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+<!--                                        --><?php //if (isset($list)): foreach ($list as $first): ?>
+<!--                                            <option value="--><?//= $first['category_id'] ?><!--" --><?//= $model['parent_id'] == $two['category_id'] ? 'selected' : '' ?><!-->&nbsp;&nbsp;&nbsp;&nbsp;|-- --><?//= $first['name'] ?><!--</option>-->
+<!--                                            --><?php //if (isset($first['child'])): foreach ($first['child'] as $two): ?>
+<!--                                                <option value="--><?//= $two['category_id'] ?><!--" --><?//= $model['parent_id'] == $three['category_id'] ? 'selected' : '' ?><!-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- --><?//= $two['name'] ?><!--</option>-->
+<!--                                                --><?php //if (isset($two['child'])): foreach ($two['child'] as $three): ?>
+<!--                                                    <option value="--><?//= $three['category_id'] ?><!--" --><?//= $model['parent_id'] == $four['category_id'] ? 'selected' : '' ?><!-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- --><?//= $three['name'] ?><!--</option>-->
+<!--                                                    --><?php //if (isset($three['child'])): foreach ($three['child'] as $four): ?>
+<!--                                                        <option value="--><?//= $four['category_id'] ?><!--">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- --><?//= $four['name'] ?><!--</option>-->
+<!--                                                    --><?php //endforeach; endif; ?>
+<!--                                                --><?php //endforeach; endif; ?>
+<!--                                            --><?php //endforeach; endif; ?>
+<!---->
+<!--                                        --><?php //endforeach; endif; ?>
                                     </select>
                                 </div>
                             </div>

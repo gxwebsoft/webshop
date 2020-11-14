@@ -13,16 +13,7 @@ use app\common\model\article\Category as CategoryModel;
  */
 class Category extends CategoryModel
 {
-    /**
-     * 分类详情
-     * @param $category_id
-     * @return Category|null
-     * @throws \think\exception\DbException
-     */
-    public static function detail($category_id)
-    {
-        return static::get($category_id);
-    }
+    
 
     /**
      * 添加新记录
@@ -71,6 +62,10 @@ class Category extends CategoryModel
     private function deleteCache()
     {
         return Cache::rm('article_category_' . self::$wxapp_id);
+    }
+
+    public function getCacheTree(){
+        return 0;
     }
 
 }

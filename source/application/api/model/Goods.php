@@ -5,7 +5,7 @@ namespace app\api\model;
 use app\common\library\helper;
 use app\common\model\Goods as GoodsModel;
 use app\api\service\Goods as GoodsService;
-
+use think\Cache;
 /**
  * 商品模型
  * Class Goods
@@ -134,9 +134,12 @@ class Goods extends GoodsModel
      */
     private function setGoodsListDataFromApi(&$data, $isMultiple, $param)
     {
+
         return parent::setGoodsListData($data, $isMultiple, function ($goods) use ($param) {
             // 计算并设置商品会员价
             $this->setGoodsGradeMoney($param['userInfo'], $goods);
+            // 计算购物车件数
+            $this->setTotalNums($param['userInfo'],$goods);
         });
     }
 
@@ -172,5 +175,25 @@ class Goods extends GoodsModel
             }
         }
     }
+
+    /**
+     * 购物车商品件数
+     * @param $user
+     * @param $goods
+     */
+    private function setTotalNums($user, &$goods)
+    {
+        isset($user['user_id']) && $data = Cache::get('cart_' . $user['user_id']);
+        if(!empty($data)){
+            foreach ($data as $item) {
+                if($item['goods_id'] == $goods['goods_id']){
+                    $goods['total_num'] = $item['goods_num'];
+                }
+            }
+        }
+
+    }
+
+
 
 }

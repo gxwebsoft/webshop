@@ -3,7 +3,7 @@
 namespace app\api\controller;
 
 use app\api\model\Cart as CartModel;
-use app\api\service\order\Checkout as CheckoutModel;
+use app\api\service\order\Checkout1 as CheckoutModel;
 
 /**
  * 购物车管理
@@ -66,7 +66,7 @@ class Cart extends Controller
             return $this->renderError($this->model->getError() ?: '加入购物车失败');
         }
         // 购物车商品总数量
-        $totalNum = $this->model->getGoodsNum();
+        $totalNum = $this->model->getTotalNum();
         return $this->renderSuccess(['cart_total_num' => $totalNum], '加入购物车成功');
     }
 
@@ -78,8 +78,27 @@ class Cart extends Controller
      */
     public function sub($goods_id, $goods_sku_id)
     {
-        $this->model->sub($goods_id, $goods_sku_id);
-        return $this->renderSuccess();
+        $index = $this->model->sub($goods_id, $goods_sku_id);
+        if($index == false){
+            $this->delete("{$goods_id}_{$goods_sku_id}");
+        }
+        // 购物车商品总数量
+        $totalNum = $this->model->getTotalNum();
+        return $this->renderSuccess(['index'=> "{$goods_id}_{$goods_sku_id}",'cart_total_num' => $totalNum],'减少购物车商品数量');
+    }
+
+    /**
+     * 减少购物车商品数量(可以减到0)
+     * @param $goods_id
+     * @param $goods_sku_id
+     * @return array
+     */
+    public function sub0($goods_id, $goods_sku_id)
+    {
+        $index = $this->model->sub0($goods_id, $goods_sku_id);
+        // 购物车商品总数量
+        $totalNum = $this->model->getTotalNum();
+        return $this->renderSuccess(['index'=>$index,'cart_total_num' => $totalNum],'减少购物车商品数量');
     }
 
     /**
@@ -91,6 +110,27 @@ class Cart extends Controller
     {
         $this->model->delete($goods_sku_id);
         return $this->renderSuccess();
+    }
+
+    // 显示购物车总数量
+    public function totalNum(){
+        // 购物车商品总数量
+        $totalNum = $this->model->getGoodsNum();
+        return $this->renderSuccess(['cart_total_num' => $totalNum], '购物车总数量');
+    }
+    // 显示购物车总数量（含件数）
+    public function getTotalNum(){
+        return $this->model->getTotalNum();
+    }
+
+    /**
+     * 减少购物车商品数量
+     * @param $goods_id
+     * @param $goods_sku_id
+     * @return array
+     */
+    public function apiTotalNum(){
+        return $this->renderSuccess($this->getTotalNum());
     }
 
 }

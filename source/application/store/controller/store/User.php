@@ -112,4 +112,16 @@ class User extends Controller
         }
         return $this->fetch('renew', compact('model'));
     }
+
+    /**
+     * 安全设置
+     * @return array|mixed
+     * @throws \think\exception\DbException
+     */
+    public function safe(){
+        // 管理员详情
+        $model = StoreUserModel::detail($this->store['user']['store_user_id']);
+        return $this->fetch('safe', compact('model'));
+    }
+
 }

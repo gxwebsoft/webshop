@@ -60,4 +60,5 @@ class Data extends Controller
             $this->statisticsDataService->getSurveyData($startDate, $endDate));
     }
 
+
 }

@@ -41,9 +41,11 @@
                             <?php if (!empty($list)): foreach ($list as $first): ?>
                                 <tr>
                                     <td class="am-text-middle"><?= $first['category_id'] ?></td>
-                                    <td class="am-text-middle"><?= $first['name'] ?></td>
+                                    <td class="am-text-middle">
+                                        
+                                        <?= $first['name'] ?></td>
                                     <td class="am-text-middle"><?= $first['sort'] ?></td>
-                                    <td class="am-text-middle"><?= $first['create_time'] ?></td>
+                                    <td class="am-text-middle"><?=  $first['create_time'] ?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
                                             <?php if (checkPrivilege('goods.category/edit')): ?>
@@ -61,55 +63,6 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <?php if (isset($first['child'])): foreach ($first['child'] as $two): ?>
-                                    <tr>
-                                        <td class="am-text-middle"><?= $two['category_id'] ?></td>
-                                        <td class="am-text-middle">　-- <?= $two['name'] ?></td>
-                                        <td class="am-text-middle"><?= $two['sort'] ?></td>
-                                        <td class="am-text-middle"><?= $two['create_time'] ?></td>
-                                        <td class="am-text-middle">
-                                            <div class="tpl-table-black-operation">
-                                                <?php if (checkPrivilege('goods.category/edit')): ?>
-                                                    <a href="<?= url('goods.category/edit',
-                                                        ['category_id' => $two['category_id']]) ?>">
-                                                        <i class="am-icon-pencil"></i> 编辑
-                                                    </a>
-                                                <?php endif; ?>
-                                                <?php if (checkPrivilege('goods.category/delete')): ?>
-                                                    <a href="javascript:;"
-                                                       class="item-delete tpl-table-black-operation-del"
-                                                       data-id="<?= $two['category_id'] ?>">
-                                                        <i class="am-icon-trash"></i> 删除
-                                                    </a>
-                                                <?php endif; ?>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <?php if (isset($two['child'])): foreach ($two['child'] as $three): ?>
-                                        <tr>
-                                            <td class="am-text-middle"><?= $three['category_id'] ?></td>
-                                            <td class="am-text-middle">　　　-- <?= $three['name'] ?></td>
-                                            <td class="am-text-middle"><?= $three['create_time'] ?></td>
-                                            <td class="am-text-middle">
-                                                <div class="tpl-table-black-operation">
-                                                    <?php if (checkPrivilege('goods.category/edit')): ?>
-                                                        <a href="<?= url('goods.category/edit',
-                                                            ['category_id' => $three['category_id']]) ?>">
-                                                            <i class="am-icon-pencil"></i> 编辑
-                                                        </a>
-                                                    <?php endif; ?>
-                                                    <?php if (checkPrivilege('goods.category/delete')): ?>
-                                                        <a href="javascript:;"
-                                                           class="item-delete tpl-table-black-operation-del"
-                                                           data-id="<?= $three['category_id'] ?>">
-                                                            <i class="am-icon-trash"></i> 删除
-                                                        </a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; endif; ?>
-                                <?php endforeach; endif; ?>
                             <?php endforeach; else: ?>
                                 <tr>
                                     <td colspan="5" class="am-text-center">暂无记录</td>

@@ -4,7 +4,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Wxapp as WxappModel;
 use app\admin\model\store\User as StoreUser;
-
+use app\common\model\Setting as SettingModel;
 /**
  * 小程序商城管理
  * Class Store
@@ -116,6 +116,28 @@ class Store extends Controller
             return $this->renderError('操作失败');
         }
         return $this->renderSuccess('操作成功');
+    }
+
+    /**
+     * 过户小程序
+     * @param $wxapp_id
+     * @return array
+     * @throws \think\exception\DbException
+     */
+    public function transfer($wxapp_id)
+    {
+        // 小程序详情
+        $model = WxappModel::detail($wxapp_id);
+        if (!$this->request->isAjax()) {
+            $wxapp_name = SettingModel::getItem('store', $wxapp_id)['name'];
+            $expire_time = date('Y-m-d H:i:s',$model['expire_time']);
+            return $this->fetch('transfer',compact('model','wxapp_name','expire_time'));
+        }
+        if(!$model->transfer(array_merge($this->postData('store'),['wxapp_id'=>$wxapp_id]))){
+            return $this->renderError('操作失败');
+        }
+        return $this->renderSuccess('操作成功');
+
     }
 
 }

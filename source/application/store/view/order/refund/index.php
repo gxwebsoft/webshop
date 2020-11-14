@@ -110,8 +110,12 @@
                                         <p>￥<?= $item['order_goods']['total_pay_price'] ?></p>
                                     </td>
                                     <td class="am-text-middle">
-                                        <p><?= $item['user']['nickName'] ?></p>
-                                        <p class="am-link-muted">(用户id：<?= $item['user']['user_id'] ?>)</p>
+                                        <?php if (!empty($item['user'])): ?>
+                                            <p><?= $item['user']['nickName'] ?></p>
+                                            <p class="am-link-muted">(用户id：<?= $item['user']['user_id'] ?>)</p>
+                                        <?php else: ?>
+                                            <p>--</p>
+                                        <?php endif; ?>
                                     </td>
                                     <td class="am-text-middle">
                                         <span class="am-badge am-badge-secondary"> <?= $item['type']['text'] ?> </span>

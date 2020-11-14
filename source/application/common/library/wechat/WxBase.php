@@ -3,6 +3,7 @@
 namespace app\common\library\wechat;
 
 use think\Cache;
+use app\common\library\helper;
 use app\common\exception\BaseException;
 
 /**
@@ -153,7 +154,7 @@ class WxBase
      */
     protected function jsonEncode($data)
     {
-        return json_encode($data, JSON_UNESCAPED_UNICODE);
+        return helper::jsonEncode($data);
     }
 
     /**
@@ -163,7 +164,7 @@ class WxBase
      */
     protected function jsonDecode($json)
     {
-        return json_decode($json, true);
+        return helper::jsonDecode($json);
     }
 
     /**

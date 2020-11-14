@@ -15,6 +15,7 @@
                                 <div class="am-u-sm-9">
                                     <input type="text" class="tpl-form-input" name="wxapp[app_id]"
                                            value="<?= $model['app_id'] ?>" required>
+                                    <small>在微信小程序后台获取，地址为 http://mp.weixin.qq.com，推荐使用<a href="<?= url('wxapp.wxopen/bind')?>">一键授权</a> </small>
                                 </div>
                             </div>
                             <div class="am-form-group">
@@ -24,6 +25,7 @@
                                 <div class="am-u-sm-9">
                                     <input type="password" class="tpl-form-input" name="wxapp[app_secret]"
                                            value="<?= $model['app_secret'] ?>" required>
+                                    <small>在微信小程序后台获取，地址为 http://mp.weixin.qq.com</small>
                                 </div>
                             </div>
                             <div class="widget-head am-cf">

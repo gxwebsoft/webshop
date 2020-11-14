@@ -4,7 +4,7 @@ namespace app\api\controller;
 
 use app\api\model\Cart as CartModel;
 use app\api\model\Order as OrderModel;
-use app\api\service\order\Checkout as CheckoutModel;
+use app\api\service\order\Checkout1 as CheckoutModel;
 use app\api\validate\order\Checkout as CheckoutValidate;
 
 /**
@@ -51,6 +51,7 @@ class Order extends Controller
             'goods_num' => 0,
             'goods_sku_id' => '',
         ]));
+
         // 表单验证
         if (!$this->validate->scene('buyNow')->check($params)) {
             return $this->renderError($this->validate->getError());
@@ -84,7 +85,6 @@ class Order extends Controller
             'payment' => $payment               // 微信支付参数
         ], ['success' => '支付成功', 'error' => '订单未支付']);
     }
-
     /**
      * 订单确认-购物车结算
      * @return array
@@ -109,6 +109,66 @@ class Order extends Controller
         $goodsList = $CartModel->getList($params['cart_ids']);
         // 获取订单结算信息
         $orderInfo = $Checkout->onCheckout($this->user, $goodsList);
+        if ($this->request->isGet()) {
+            return $this->renderSuccess($orderInfo);
+        }
+        // 创建订单
+        if (!$Checkout->createOrder($orderInfo)) {
+            return $this->renderError($Checkout->getError() ?: '订单创建失败');
+        }
+        // 移出购物车中已下单的商品
+        $CartModel->clearAll($params['cart_ids']);
+        // 构建微信支付请求
+        $payment = $Checkout->onOrderPayment();
+        // 返回状态
+        return $this->renderSuccess([
+            'order_id' => $Checkout->model['order_id'],   // 订单id
+            'pay_type' => $params['pay_type'],  // 支付方式
+            'payment' => $payment               // 微信支付参数
+        ], ['success' => '支付成功', 'error' => '订单未支付']);
+    }
+    /**
+     * 订单确认-购物车结算
+     * @return array
+     * @throws \app\common\exception\BaseException
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \Exception
+     */
+    public function cartxxzj()
+    {
+        // 实例化结算台服务
+        $Checkout = new CheckoutModel;
+        // 订单结算api参数
+        $params = $Checkout->setParam($this->getParam([
+            'cart_ids' => '',
+        ]));
+
+        // 商品结算信息
+        $CartModel = new CartModel($this->user);
+        // 购物车商品列表
+        $goodsList = $CartModel->getList($params['cart_ids']);
+        // 获取订单结算信息
+        $orderInfo = $Checkout->onCheckout($this->user, $goodsList);
+        //获取当前时间
+        $date=date('Y-m-d H:i:s');
+
+        $date_time=explode(" ",$date);
+        //获取后台设置截止发货时间
+        $one=model('setting')->where('key','store')->where('wxapp_id',$this->wxapp_id)->find();
+        $res = $one->toArray();
+        if(!empty($res['values']['fh']['key'])){
+            $time=$res['values']['fh']['key'];
+            if($date_time[1]>$time)
+            {
+                $orderInfo['deliveryTime']=date('Y-m-d',strtotime("$date  +1   day"));
+            }
+            else{
+                $orderInfo['deliveryTime']=$date_time[0];
+            }
+        }
         if ($this->request->isGet()) {
             return $this->renderSuccess($orderInfo);
         }

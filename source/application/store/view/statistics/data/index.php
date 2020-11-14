@@ -127,8 +127,14 @@
     <div class="row">
         <div class="am-u-sm-6 am-margin-bottom">
             <div class="widget-ranking widget am-cf">
-                <div class="widget-head">
+                <div class="widget-head" style="display: flex; justify-content: space-between">
                     <div class="widget-title">商品销售榜</div>
+                    <div class="am-btn-group am-btn-group-xs">
+                        <a class="j-export am-btn am-btn-success am-radius"
+                           href="javascript:void(0);">
+                            <i class="iconfont icon-daochu am-margin-right-xs"></i>导出数据
+                        </a>
+                    </div>
                 </div>
                 <div class="widget-body am-cf">
                     <table width="100%" class="am-table am-table-compact am-table-striped
@@ -308,6 +314,22 @@
             }
 
         }
+
+    });
+
+    $(function () {
+
+        /**
+         * 订单导出
+         */
+        $('.j-export').click(function () {
+            var data = {};
+            var formData = $('#form-search').serializeArray();
+            $.each(formData, function () {
+                this.name !== 's' && (data[this.name] = this.value);
+            });
+            window.location = "<?= url('statistics.export/index') ?>" + '&' + $.urlEncode(data);
+        });
 
     });
 

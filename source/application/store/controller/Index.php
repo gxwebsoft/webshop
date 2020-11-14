@@ -2,6 +2,7 @@
 
 namespace app\store\controller;
 
+use think\Session;
 use app\store\model\Store as StoreModel;
 
 /**
@@ -26,6 +27,7 @@ class Index extends Controller
             $this->redirect($url);
         }
         $model = new StoreModel;
+
         return $this->fetch('index', ['data' => $model->getHomeData()]);
     }
 

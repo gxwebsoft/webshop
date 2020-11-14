@@ -28,6 +28,7 @@ class Goods extends Controller
         // 获取列表数据
         $model = new GoodsModel;
         $list = $model->getList($param, $this->getUser(false));
+
         return $this->renderSuccess(compact('list'));
     }
 

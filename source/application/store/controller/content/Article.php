@@ -22,7 +22,9 @@ class Article extends Controller
     {
         $model = new ArticleModel;
         $list = $model->getList();
-        return $this->fetch('index', compact('list'));
+        $catgory = CategoryModel::catTree();
+//        pre($catgory);
+        return $this->fetch('index', compact('list','catgory'));
     }
 
     /**
@@ -34,7 +36,9 @@ class Article extends Controller
         $model = new ArticleModel;
         if (!$this->request->isAjax()) {
             // 文章分类
-            $catgory = CategoryModel::getAll();
+//            $catgory = CategoryModel::getAll();
+            $catgory = CategoryModel::catTree();
+
             return $this->fetch('add', compact('catgory'));
         }
         // 新增记录
@@ -56,8 +60,9 @@ class Article extends Controller
         $model = ArticleModel::detail($article_id);
         if (!$this->request->isAjax()) {
             // 文章分类
-            $catgory = CategoryModel::getAll();
-            return $this->fetch('edit', compact('model', 'catgory'));
+//            $catgory = CategoryModel::getAll();
+            $list = CategoryModel::catTree();
+            return $this->fetch('edit', compact('model', 'list'));
         }
         // 更新记录
         if ($model->edit($this->postData('article'))) {

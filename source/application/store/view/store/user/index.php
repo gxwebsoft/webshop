@@ -3,7 +3,7 @@
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
-                    <div class="widget-title a m-cf">管理员列表</div>
+                    <div class="widget-title a m-cf">员工账号列表</div>
                 </div>
                 <div class="widget-body am-fr">
                     <!-- 工具栏 -->
@@ -24,9 +24,10 @@
                          tpl-table-black am-text-nowrap">
                             <thead>
                             <tr>
-                                <th>管理员ID</th>
+                                <th>账号ID</th>
                                 <th>用户名</th>
                                 <th>姓名</th>
+                                <th>手机号码</th>
                                 <th>添加时间</th>
                                 <th>操作</th>
                             </tr>
@@ -37,6 +38,7 @@
                                     <td class="am-text-middle"><?= $item['store_user_id'] ?></td>
                                     <td class="am-text-middle"><?= $item['user_name'] ?></td>
                                     <td class="am-text-middle"><?= $item['real_name'] ?></td>
+                                    <td class="am-text-middle"><?= $item['mobile'] ?></td>
                                     <td class="am-text-middle"><?= $item['create_time'] ?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">

@@ -8,11 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="icon" type="image/png" href="assets/common/i/favicon.ico"/>
+    <link rel="icon" type="image/png" href="assets/store/i/favicon2.ico"/>
     <meta name="apple-mobile-web-app-title" content="<?= $setting['store']['values']['name'] ?>"/>
     <link rel="stylesheet" href="assets/common/css/amazeui.min.css"/>
     <link rel="stylesheet" href="assets/store/css/app.css?v=<?= $version ?>"/>
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_783249_m68ye1gfnza.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_783249_m68ye1gfnza.css?v=<?= $version ?>">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2063847_07oyy2jh5647.css?v=<?= $version ?>">
     <script src="assets/common/js/jquery.min.js"></script>
     <script src="//at.alicdn.com/t/font_783249_e5yrsf08rap.js"></script>
     <script>
@@ -51,6 +52,34 @@
                     </li>
                 </ul>
             </div>
+            <!-- 应用到期提醒 -->
+            <?php if($store['wxapp']['status'] == 10): ?>
+                <div class="am-text-sm " style="padding-left: 150px;line-height: 50px;">
+                    <div style="color: #F37B1D;">
+                        <i class="am-warning am-icon-warning"></i>
+                        <span>
+                            当前版本(试用版)，如需升级请订购！&nbsp; 客服电话：0771-5386339&nbsp;&nbsp;
+                        </span>
+                        <a class="am-btn am-btn-warning am-btn-xs"  href="http://www.wsdns.cn/" target="_blank">
+                            <i class="am-icon-shopping-cart"></i> 立即订购
+                        </a>
+                    </div>
+                </div>
+            <?php endif;?>
+            <?php if($store['wxapp']['expire_time'] < time()): ?>
+                <div class="am-text-sm " style="padding-left: 150px;line-height: 50px;">
+                    <div style="color: #F37B1D;">
+                        <i class="am-warning am-icon-warning"></i>
+                        <span>
+                            您的站点已过期，如需继续使用请订购! &nbsp;客服电话：0771-5386339&nbsp;&nbsp;
+                        </span>
+                        <a class="am-btn am-btn-warning am-btn-xs"  href="http://www.wsdns.cn/" target="_blank">
+                            <i class="am-icon-shopping-cart"></i> 立即订购
+                        </a>
+                    </div>
+                </div>
+            <?php endif;?>
+            <br>
         </div>
     </header>
     <!-- 侧边导航栏 -->
@@ -61,6 +90,7 @@
             <!-- 一级菜单 -->
             <ul class="sidebar-nav">
                 <li class="sidebar-nav-heading"><?= $setting['store']['values']['name'] ?></li>
+<!--                <li class="sidebar-nav-heading">后台管理</li>-->
                 <?php foreach ($menus as $key => $item): ?>
                     <li class="sidebar-nav-link">
                         <a href="<?= isset($item['index']) ? url($item['index']) : 'javascript:void(0);' ?>"
@@ -124,6 +154,23 @@
         {__CONTENT__}
     </div>
     <!-- 内容区域 end -->
+
+    <!-- 底部版权 start -->
+    <?php if($store['wxapp']['status'] == 20):?>
+        <div class="help-block am-text-center am-padding-sm" style="margin-left:101px;">
+            <small>copyright &copy; <?=date('Y')?> <?=$store['user']['user_name']?> 版权所有 (正式版v<?= $version ?>)</small>
+            <script src="http://s23.cnzz.com/stat.php?id=5482843&web_id=5482843&show=pic" language="JavaScript"></script>
+        </div>
+    <?php else:?>
+        <!-- 试用、过期、禁用状态显示如下 -->
+        <div class="help-block am-text-center am-padding-sm" style="margin-left:101px;">
+            <small>copyright &copy; <?=date('Y')?> wsdns.cn 版权所有 (试用版)</small>
+            <script src="http://s23.cnzz.com/stat.php?id=5482843&web_id=5482843&show=pic" language="JavaScript"></script>
+        </div>
+    <?php endif;?>
+    <!-- 底部版权 end -->
+
+
 
 </div>
 <script src="assets/common/plugins/layer/layer.js"></script>

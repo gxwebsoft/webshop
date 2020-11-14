@@ -198,4 +198,117 @@ class User extends StoreUserModel
         return true;
     }
 
+    /**
+     * 一键登录登录
+     * @param $data
+     * @return bool
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function autologin11($data)
+    {
+        // 验证用户名密码是否正确
+        $user = db('store_user')
+            ->where('orderNo',$data['orderNo'])
+            ->find();
+        $user['wxapp']= db('wxapp')->find($user['wxapp_id']);
+        if (!$user) {
+            $this->error = '登录失败, 用户名或密码错误';
+            return false;
+        }
+        if (empty($user['wxapp'])) {
+            $this->error = '登录失败, 未找到小程序信息';
+            return false;
+        }
+        if ($user['wxapp']['is_recycle']) {
+            $this->error = '登录失败, 当前小程序商城已删除';
+            return false;
+        }
+        // 保存登录状态
+        // 保存登录状态
+        Session::set('yoshop_store', [
+            'user' => [
+                'store_user_id' => $user['store_user_id'],
+                'user_name' => $user['user_name'],
+            ],
+            'wxapp' => $user['wxapp'],
+            'is_login' => true,
+        ]);
+        return json_encode(Session::get('yoshop_store'));
+    }
+
+    public function autologin($data)
+    {
+
+        return json_encode($data);
+        //签名验证（AK/SK算法)
+        $sign=$this->verifySign(input('param.appid'),input('param.'));
+        if($sign['code']!=0){
+            return '签名失败';
+        }
+
+        $store=db('store_user')->where('wxapp_id',input('param.appid'))->find();
+        $wxapp=db('wxapp')->where('wxapp_id',input('param.appid'))->find();
+        $store['wxapp']=$wxapp;
+
+        // 验证用户名密码是否正确
+        if (!$store) {
+            echo '登录失败, 用户名或密码错误';
+            return false;
+        }
+        if (empty($store['wxapp'])) {
+            echo  '登录失败, 未找到小程序信息';
+            return false;
+        }
+        if ($store['wxapp']['is_recycle']) {
+            echo '登录失败, 当前小程序商城已删除';
+            return false;
+        }
+
+        // 保存登录状态
+        Session::set('yoshop_store', [
+            'user' => [
+                'store_user_id' => $store['store_user_id'],
+                'user_name' => $store['user_name'],
+            ],
+            'wxapp' => $store['wxapp'],
+            'is_login' => true,
+        ]);
+        return $this->redirect('/index.php?s=/store/index/index/');
+    }
+
+    /**
+     * 商家用户登录
+     * @param $data
+     * @return bool
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function wxlogin($unionid)
+    {
+        $unionid = input('param.unionid/s');
+        $model = new StoreUserModel();
+        $user =  $model->with(['wxapp'])->where([
+            'unionid' => $unionid,
+            'is_delete' => 0
+        ])->find();
+        /** @var \app\common\model\Wxapp $wxapp */
+        $wxapp = $user['wxapp'];
+
+
+        // 保存登录状态
+        Session::set('yoshop_store', [
+            'user' => [
+                'store_user_id' => $user['store_user_id'],
+                'user_name' => $user['user_name'],
+            ],
+            'wxapp' => $wxapp->toArray(),
+            'is_login' => true,
+        ]);
+        return true;
+    }
 }

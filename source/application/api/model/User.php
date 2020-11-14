@@ -62,7 +62,10 @@ class User extends UserModel
         $this->token = $this->token($session['openid']);
         // 记录缓存, 7天
         Cache::set($this->token, $session, 86400 * 7);
+        // 记录token
+        $this->save(['token'=>$this->token],['user_id'=>$user_id]);
         return $user_id;
+
     }
 
     /**
@@ -200,5 +203,53 @@ class User extends UserModel
         }
         return $menus;
     }
+
+    //返回全部用户信息
+    public function getList($nickName = '', $gender = -1, $grade = null)
+    {
+        // 检索：微信昵称
+        !empty($nickName) && $this->where('nickName', 'like', "%$nickName%");
+        // 检索：性别
+        if ($gender !== '' && $gender > -1) {
+            $this->where('gender', '=', (int)$gender);
+        }
+        // 检索：会员等级
+        $grade > 0 && $this->where('grade_id', '=', (int)$grade);
+        // 获取用户列表
+        return $this->with(['grade'])
+            ->where('is_delete', '=', '0')
+            ->order(['create_time' => 'desc'])
+            ->paginate(15, false, [
+                'query' => \request()->request()
+            ]);
+    }
+
+    /**
+     * 生成用户认证的token
+     * @param $openid
+     * @return string
+     */
+    public function apiToken($openid,$wxapp_id)
+    {
+        $user = db('user')->where(['open_id'=>$openid,'wxapp_id'=>$wxapp_id])->find();
+        //验证商户身份失败
+        if(!$user){
+            $user = ['msg'=>'Validation failed','code'=>0];
+            return json_encode($user);
+        }
+        // 生成一个不会重复的随机字符串
+        $guid = \getGuidV4();
+        // 当前时间戳 (精确到毫秒)
+        $timeStamp = microtime(true);
+        // 自定义一个盐
+        $salt = 'token_salt';
+        $token = md5("{$wxapp_id}_{$timeStamp}_{$openid}_{$guid}_{$salt}");
+        if($token){
+            // 记录缓存, 7天
+            Cache::set($token, $token, 86400 * 7);
+            return $token;
+        }
+    }
+
 
 }

@@ -9,11 +9,11 @@
  */
 return [
     'store' => [
-        'name' => '小程序商城',
+        'name' => '新一代SaaS应用平台',
         'icon' => 'icon-shangcheng',
         'submenu' => [
             [
-                'name' => '商城列表',
+                'name' => '应用列表',
                 'index' => 'store/index',
                 'uris' => [
                     'store/index',

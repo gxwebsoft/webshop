@@ -89,7 +89,7 @@ use app\common\enum\live\LiveStatus as LiveStatusEnum;
                                     </td>
                                     <td class="am-text-middle">
                                         <span class="j-setTop x-cur-p am-badge am-badge-<?= $item['is_top'] ? 'success' : 'warning' ?>"
-                                              data-id="<?= $item['room_id'] ?>" data-istop="<?= $item['is_top'] ?>">
+                                              data-id="<?= $item['id'] ?>" data-istop="<?= $item['is_top'] ?>">
                                                <?= $item['is_top'] ? '是' : '否' ?></span>
                                     </td>
                                     <td class="am-text-middle"><?= $item['update_time'] ?></td>
@@ -137,7 +137,7 @@ use app\common\enum\live\LiveStatus as LiveStatusEnum;
                 , function (index) {
                     var url = "<?= url('apps.live.room/settop') ?>";
                     $.post(url
-                        , {room_id: data['id'], is_top: Number(!(parseInt(data['istop']) === 1))}
+                        , {id: data['id'], is_top: Number(!(parseInt(data['istop']) === 1))}
                         , function (result) {
                             result['code'] === 1 ? $.show_success(result['msg'], result['url'])
                                 : $.show_error(result['msg']);

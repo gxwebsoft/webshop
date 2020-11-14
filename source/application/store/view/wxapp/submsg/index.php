@@ -123,10 +123,10 @@
         // 一键配置
         $('.j-shuttle').on('click', function () {
             var url = "<?= url('wxapp.submsg/shuttle') ?>";
-            var load = layer.load();
             layer.confirm('该操作将自动为您的小程序添加订阅消息<br>请先确保 "订阅消息" - "我的模板" 中没有记录<br>确定添加吗？', {
                 title: '友情提示'
             }, function (index) {
+                var load = layer.load();
                 $.post(url, {}, function (result) {
                     result.code === 1 ? $.show_success(result.msg, result.url)
                         : $.show_error(result.msg);

@@ -46,7 +46,7 @@ class User extends UserModel
     public function getList($nickName = '', $gender = -1, $grade = null)
     {
         // 检索：微信昵称
-        !empty($nickName) && $this->where('nickName', 'like', "%$nickName%");
+        !empty($nickName) && $this->where('nickName|mobile', 'like', "%$nickName%");
         // 检索：性别
         if ($gender !== '' && $gender > -1) {
             $this->where('gender', '=', (int)$gender);

@@ -39,5 +39,4 @@ class User extends Controller
         $userInfo = $this->getUser();
         return $this->renderSuccess(compact('userInfo'));
     }
-
 }

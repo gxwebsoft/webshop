@@ -6,9 +6,11 @@
                     <div class="widget-title am-cf">文章列表</div>
                 </div>
                 <div class="widget-body am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
+                    <!-- 工具栏 -->
+                    <div class="page_toolbar am-margin-bottom-xs am-cf">
+                        <form class="toolbar-form" action="">
+                            <input type="hidden" name="s" value="/<?= $request->pathinfo() ?>">
+                            <div class="am-u-sm-12 am-u-md-3">
                                 <?php if (checkPrivilege('content.article/add')): ?>
                                     <div class="am-btn-group am-btn-group-xs">
                                         <a class="am-btn am-btn-default am-btn-success am-radius"
@@ -18,8 +20,36 @@
                                     </div>
                                 <?php endif; ?>
                             </div>
-                        </div>
+                            <div class="am-u-sm-12 am-u-md-9">
+                                <div class="am fr">
+                                    <div class="am-form-group am-fl">
+                                        <?php $category_id = $request->get('category_id') ?: null; ?>
+                                        <select name="category_id"
+                                                data-am-selected="{searchBox: 1, btnSize: 'sm',  placeholder: '文章分类', maxHeight: 400}">
+                                            <option value=""></option>
+                                            <?php foreach ($catgory as $vo): ?>
+                                                <option value="<?= $vo['category_id'] ?>" <?=$category_id == $vo['category_id'] ? 'selected' : ''?>>
+                                                    <?=$vo['name'] ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="am-form-group am-fl">
+                                        <div class="am-input-group am-input-group-sm tpl-form-border-form">
+                                            <input type="text" class="am-form-field" name="search"
+                                                   placeholder="请输入文章ID|文章标题"
+                                                   value="<?= $request->get('search') ?>">
+                                            <div class="am-input-group-btn">
+                                                <button class="am-btn am-btn-default am-icon-search"
+                                                        type="submit"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
+                <div class="widget-body am-fr">
                     <div class="am-scrollable-horizontal am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-table-striped
                          tpl-table-black am-text-nowrap">
@@ -33,7 +63,6 @@
                                 <th>文章排序</th>
                                 <th>状态</th>
                                 <th>添加时间</th>
-                                <th>更新时间</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -43,7 +72,7 @@
                                     <td class="am-text-middle"><?= $item['article_id'] ?></td>
                                     <td class="am-text-middle">
                                         <p class="item-title"
-                                           style="max-width: 400px;"><?= $item['article_title'] ?></p>
+                                           style="width: 220px;"><?= $item['article_title'] ?></p>
                                     </td>
                                     <td class="am-text-middle">
                                         <a href="<?= $item['image']['file_path'] ?>" title="点击查看大图" target="_blank">
@@ -59,7 +88,6 @@
                                            </span>
                                     </td>
                                     <td class="am-text-middle"><?= $item['create_time'] ?></td>
-                                    <td class="am-text-middle"><?= $item['update_time'] ?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
                                             <?php if (checkPrivilege('content.article/edit')): ?>
@@ -75,6 +103,14 @@
                                                     <i class="am-icon-trash"></i> 删除
                                                 </a>
                                             <?php endif; ?>
+                                            <?php if (checkPrivilege('content.article/view')): ?>
+                                                <a href="javascript:void(0);"
+                                                   class="item-view tpl-table-black-operation-green"
+                                                   data-id="<?= $item['article_id'] ?>">
+                                                    <i class="am-icon-edge"></i> 预览
+                                                </a>
+                                            <?php endif; ?>
+
                                         </div>
                                     </td>
                                 </tr>
@@ -103,6 +139,8 @@
         // 删除元素
         var url = "<?= url('content.article/delete') ?>";
         $('.item-delete').delete('article_id', url);
+        // 预览
+        $('.item-view').view('article_id');
 
     });
 </script>

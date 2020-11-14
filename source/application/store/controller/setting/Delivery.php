@@ -22,6 +22,7 @@ class Delivery extends Controller
     {
         $model = new DeliveryModel;
         $list = $model->getList();
+
         return $this->fetch('index', compact('list'));
     }
 
@@ -86,6 +87,7 @@ class Delivery extends Controller
             $formData = json_encode($model->getFormList());
             return $this->fetch('add', compact('model', 'regionData', 'cityCount', 'formData'));
         }
+//       halt($this->postData('delivery'));
         // 更新记录
         if ($model->edit($this->postData('delivery'))) {
             return $this->renderSuccess('更新成功', url('setting.delivery/index'));

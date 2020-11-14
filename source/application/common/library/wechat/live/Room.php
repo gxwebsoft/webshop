@@ -33,7 +33,7 @@ class Room extends WxBase
             $this->error = 'not found errcode';
             return false;
         }
-        if ($response['errcode'] != 0) {
+        if ((int)$response['errcode'] > 1) {
             $this->error = $response['errmsg'];
             return false;
         }

@@ -5,7 +5,7 @@ namespace app\api\controller\bargain;
 use app\api\controller\Controller;
 use app\api\model\bargain\Task as TaskModel;
 use app\api\model\bargain\Setting as SettingModel;
-use app\api\service\order\Checkout as CheckoutModel;
+use app\api\service\order\Checkout1 as CheckoutModel;
 use app\common\enum\order\OrderSource as OrderSourceEnum;
 
 class Order extends Controller

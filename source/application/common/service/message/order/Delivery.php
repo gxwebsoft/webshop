@@ -101,7 +101,8 @@ class Delivery extends Basics
      */
     private function getFormatAddress($orderInfo)
     {
-        return implode('', $orderInfo['address']['region']) . $orderInfo['address']['detail'];
+        $address = implode('', $orderInfo['address']['region']) . $orderInfo['address']['detail'];
+        return $this->getSubstr($address);
     }
 
     /**

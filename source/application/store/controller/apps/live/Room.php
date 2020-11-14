@@ -42,15 +42,15 @@ class Room extends Controller
 
     /**
      * 修改直播间置顶状态
-     * @param $room_id
-     * @param $is_top
+     * @param int $id
+     * @param int $is_top
      * @return array|bool
      * @throws \think\exception\DbException
      */
-    public function settop($room_id, $is_top)
+    public function settop($id, $is_top)
     {
         // 直播间详情
-        $model = LiveRoomModel::detail($room_id);
+        $model = LiveRoomModel::detail($id);
         if (!$model->setIsTop($is_top)) {
             return $this->renderError('操作失败');
         }

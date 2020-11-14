@@ -70,4 +70,19 @@ class Driver
         return new $classSpace($this->config['engine'][$this->engineName]);
     }
 
+    public function getCode($code)
+    {
+        switch ($code) {
+            case 0: return '短信发送成功';
+            case -1: return '参数不全';
+            case -2: return '服务器空间不支持,请确认支持curl或者fsocket，联系您的空间商解决或者更换空间！';
+            case 30: return '密码错误';
+            case 40: return '账号不存在';
+            case 41: return '余额不足';
+            case 42: return '帐户已过期';
+            case 43: return 'IP地址限制';
+            case 50: return '内容含有敏感词';
+        }
+
+    }
 }

@@ -147,6 +147,13 @@
                                                                    target="_blank">分销二维码</a>
                                                             </li>
                                                         <?php endif; ?>
+                                                        <?php if (checkPrivilege('apps.dealer.user/qrcodeone')): ?>
+                                                            <li>
+                                                                <a class=""
+                                                                   href="<?= url('apps.dealer.user/qrcodeone', ['dealer_id' => $item['user_id']]) ?>"
+                                                                   target="_blank">独立二维码</a>
+                                                            </li>
+                                                        <?php endif; ?>
                                                     </ul>
                                                 </div>
                                             <?php endif; ?>

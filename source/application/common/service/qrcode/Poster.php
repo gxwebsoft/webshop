@@ -59,6 +59,20 @@ class Poster extends Base
     }
 
     /**
+     * 获取独立二维码
+     * @return string
+     * @throws \app\common\exception\BaseException
+     * @throws \think\exception\DbException
+     * @throws \Exception
+     */
+    public function getImageOne()
+    {
+        $wxappId = $this->dealer['wxapp_id'];
+        $qrcode = $this->saveQrcode($wxappId, 'uid:' . $this->dealer['user_id']);
+        return $this->savePosterOne($qrcode);
+    }
+
+    /**
      * 海报图文件路径
      * @return string
      */
@@ -136,6 +150,27 @@ class Poster extends Base
 
         // 保存图片
         $editor->save($backdropImage, $this->getPosterPath());
+        return $this->getPosterUrl();
+    }
+
+    /**
+     * 保存独立二维码
+     * @param $backdrop
+     * @param $avatarUrl
+     * @param $qrcode
+     * @return string
+     * @throws \Exception
+     */
+    private function savePosterOne($qrcode){
+        // 实例化图像编辑器
+        $editor = Grafika::createEditor(['Gd']);
+
+        // 生成圆形小程序码
+        $this->config['qrcode']['style'] === 'circle' && $this->circular($qrcode, $qrcode);
+        // 打开小程序码
+        $editor->open($qrcodeImage, $qrcode);
+        // 保存图片
+        $editor->save($qrcodeImage, $this->getPosterPath());
         return $this->getPosterUrl();
     }
 

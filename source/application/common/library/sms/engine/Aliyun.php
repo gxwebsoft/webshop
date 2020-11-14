@@ -45,7 +45,6 @@ class Aliyun extends Server
 
         // 可选: 设置模板参数, 假如模板中存在变量需要替换则为必填项
         $params['TemplateParam'] = $templateParams;
-
         // 可选: 设置发送短信流水号
         // $params['OutId'] = "12345";
 

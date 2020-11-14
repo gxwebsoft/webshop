@@ -11,10 +11,10 @@ use app\common\enum\DeliveryType as DeliveryTypeEnum;
                     <div class="widget-body">
                         <fieldset>
                             <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">商城设置</div>
+                                <div class="widget-title am-fl">基本设置</div>
                             </div>
                             <div class="am-form-group">
-                                <label class="am-u-sm-3 am-form-label form-require"> 商城名称 </label>
+                                <label class="am-u-sm-3 am-form-label form-require"> 站点名称 </label>
                                 <div class="am-u-sm-9">
                                     <input type="text" class="tpl-form-input" name="store[name]"
                                            value="<?= $values['name'] ?>" required>
@@ -55,6 +55,16 @@ use app\common\enum\DeliveryType as DeliveryTypeEnum;
                                            value="<?= $values['kuaidi100']['key'] ?>">
                                 </div>
                             </div>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label"> 发货截止 </label>
+                                <div class="am-u-sm-9">
+                                    <?php if($values['fh']['key'] ==null)?>
+                                    <input type="text" class="tpl-form-input" name="store[fh][key]"
+                                           value="<?= $values['fh']['key']?>">
+
+                                </div>
+                            </div>
+
                             <div class="am-form-group">
                                 <div class="am-u-sm-9 am-u-sm-push-3 am-margin-top-lg">
                                     <button type="submit" class="j-submit am-btn am-btn-secondary">提交

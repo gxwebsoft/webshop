@@ -35,6 +35,16 @@ class Wxapp extends BaseModel
     }
 
     /**
+     * 关联会员记录表
+     * @return \think\model\relation\BelongsTo
+     */
+    public function user()
+    {
+        $module = self::getCalledModule() ?: 'common';
+        return $this->belongsTo("app\\common\\model\\User");
+    }
+
+    /**
      * 从缓存中获取小程序信息
      * @param int|null $wxappId 小程序id
      * @return array $data

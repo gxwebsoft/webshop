@@ -4,6 +4,7 @@
 
 use think\Request;
 use think\Log;
+use app\common\model\Wxapp as WxappModel;
 
 /**
  * 打印调试函数
@@ -356,7 +357,148 @@ function filter_emoji($text)
 function str_substr($str, $length = 30)
 {
     if (strlen($str) > $length) {
-        $str = mb_substr($str, 0, $length);
+        $str = mb_substr($str, 0, $length, 'utf-8');
     }
     return $str;
 }
+
+/**
+ * 个性化日期显示
+ * @static
+ * @access public
+ * @param datetime $times 日期
+ * @return string 返回大致日期
+ * @example 示例 ueTime('')
+ */
+function ue_time($times) {
+    if ($times == '' || $times == 0) {
+        return false;
+    }
+    //完整时间戳
+    $strtotime = is_int($times) ? $times : strtotime($times);
+    $times_day = date('Y-m-d', $strtotime);
+    $times_day_strtotime = strtotime($times_day);
+
+    //今天
+    $nowdate_str = strtotime(date('Y-m-d'));
+
+    //精确的时间间隔(秒)
+    $interval = time() - $strtotime;
+
+    //今天的
+    if ($times_day_strtotime == $nowdate_str) {
+
+        //小于一分钟
+        if ($interval < 60) {
+            $pct = sprintf("%d秒前", $interval);
+        }
+        //小于1小时
+        elseif ($interval < 3600) {
+            $pct = sprintf("%d分钟前", ceil($interval / 60));
+        } else {
+            $pct = sprintf("%d小时前", floor($interval / 3600));
+        }
+    }
+    //昨天的
+    elseif ($times_day_strtotime == strtotime(date('Y-m-d', strtotime('-1 days')))) {
+        $pct = '昨天' . date('H:i', $strtotime);
+    }
+    //前天的
+    elseif ($times_day_strtotime == strtotime(date('Y-m-d', strtotime('-2 days')))) {
+        $pct = '前天' . date('H:i', $strtotime);
+    }
+    //一个月以内
+    elseif ($interval < (3600 * 24 * 30)) {
+        $pct = date('m月d日', $strtotime);
+    }
+    //一年以内
+    elseif ($interval < (3600 * 24 * 365)) {
+        $pct = date('m月d日', $strtotime);
+    }
+    //一年以上
+    else {
+        $pct = date('Y年m月d日', $strtotime);
+    }
+    return $pct;
+}
+
+/**
+ * 到期时间显示
+ * @static
+ * @access public
+ * @param datetime $times 日期
+ * @return string 返回大致日期
+ * @example 示例 ueTime('')
+ */
+function expire_time($times) {
+    $time = round(($times - time())/24/60/60 - 1);
+
+    // 已过期
+    if( $times < time()) {
+        return '<span style="color: #F37B1D;">(已经过期)';
+
+    }
+    // 小于一个月开始提醒
+    if( $time < 30 ){
+        return '<span style="color: #5eb95e;">(' . $time . '天后到期)';
+    }
+}
+
+/**
+ * 获取站内二级域名
+ * @static
+ * @access public
+ * @example 示例 10001
+ */
+function domain_prefix(){
+
+    $domain = $_SERVER['HTTP_HOST'];
+    $domain = explode('.',$domain);
+    if( count($domain) == 2 ){
+        return $_SERVER['HTTP_HOST'];
+    }
+    // 顶级域名
+    $top_domain = $domain[count($domain)-2] .'.'. $domain[count($domain)-1];
+    // 二级域名前缀
+    $second_prefix = $domain[count($domain)-3];
+    // 从域名拿到wxapp_id
+    $wxapp_id = substr($second_prefix,1,strlen($second_prefix));
+    // 站内域名绑定
+    if($top_domain == 'wsdns.cn' && substr($second_prefix,0,1) == 's' && is_numeric($wxapp_id)){
+        return $wxapp_id;
+    }
+    // 外部域名
+    return $_SERVER['HTTP_HOST'];
+}
+
+/**
+ * 整理字符串参数放在网址上
+ * 如：appid/10155/time/1572499627/sign/f18bd02caeadcdea509d45060f03a705
+ **/
+function str_sign_url($data){
+    $paramurl = http_build_query($data);
+    $paramurl = str_replace('=','/',$paramurl);
+    $paramurl = str_replace('&','/',$paramurl);
+    return $paramurl;
+}
+
+
+/**
+ * 加密URL地址
+ * 加密后：aHR0cDovL3d3dy53c2Rucy5jbi9pbmRleC5waHA%2Fcz0vaXRlbXMvZGV0YWlsL2l0ZW1zX2lkLzEyMQ%3D%3D
+ **/
+function url_encryption($url){
+    $path = base64_encode($url);
+    return Urlencode($path);
+}
+
+
+/**
+ * 解密URL地址
+ * 解码后：http://www.wsdns.cn/index.php?s=/items/detail/items_id/121
+ **/
+function url_decrypt($url){
+    $path = base64_decode(rawurldecode($url));
+    return Urldecode($path);
+}
+

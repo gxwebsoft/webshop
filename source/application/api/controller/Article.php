@@ -47,6 +47,7 @@ class Article extends Controller
     public function detail($article_id)
     {
         $detail = ArticleModel::detail($article_id);
+        $detail->setInc('actual_views',1);
         return $this->renderSuccess(compact('detail'));
     }
 

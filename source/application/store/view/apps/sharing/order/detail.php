@@ -686,6 +686,7 @@ $detail = isset($detail) ? $detail : null;
                                 : $.show_error(result.msg);
                         }
                     });
+                    return true;
                 }
             });
         });

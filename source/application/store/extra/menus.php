@@ -13,35 +13,8 @@ return [
         'icon' => 'icon-home',
         'index' => 'index/index',
     ],
-    'store' => [
-        'name' => '管理员',
-        'icon' => 'icon-guanliyuan',
-        'index' => 'store.user/index',
-        'submenu' => [
-            [
-                'name' => '管理员列表',
-                'index' => 'store.user/index',
-                'uris' => [
-                    'store.user/index',
-                    'store.user/add',
-                    'store.user/edit',
-                    'store.user/delete',
-                ],
-            ],
-            [
-                'name' => '角色管理',
-                'index' => 'store.role/index',
-                'uris' => [
-                    'store.role/index',
-                    'store.role/add',
-                    'store.role/edit',
-                    'store.role/delete',
-                ],
-            ],
-        ]
-    ],
     'goods' => [
-        'name' => '商品管理',
+        'name' => '商品',
         'icon' => 'icon-goods',
         'index' => 'goods/index',
         'submenu' => [
@@ -75,7 +48,7 @@ return [
         ],
     ],
     'order' => [
-        'name' => '订单管理',
+        'name' => '订单',
         'icon' => 'icon-order',
         'index' => 'order/all_list',
         'submenu' => [
@@ -115,12 +88,12 @@ return [
         ]
     ],
     'user' => [
-        'name' => '用户管理',
+        'name' => '会员',
         'icon' => 'icon-user',
         'index' => 'user/index',
         'submenu' => [
             [
-                'name' => '用户列表',
+                'name' => '会员列表',
                 'index' => 'user/index',
             ],
             [
@@ -156,7 +129,7 @@ return [
         ]
     ],
     'shop' => [
-        'name' => '门店管理',
+        'name' => '门店',
         'icon' => 'icon-shop',
         'index' => 'shop/index',
         'submenu' => [
@@ -186,13 +159,13 @@ return [
                 ]
             ],
             [
-                'name' => '订单核销记录',
+                'name' => '核销记录',
                 'index' => 'shop.order/index',
             ]
         ]
     ],
     'content' => [
-        'name' => '内容管理',
+        'name' => '内容',
         'icon' => 'icon-wenzhang',
         'index' => 'content.article/index',
         'submenu' => [
@@ -245,7 +218,7 @@ return [
         ]
     ],
     'market' => [
-        'name' => '营销管理',
+        'name' => '营销',
         'icon' => 'icon-marketing',
         'index' => 'market.coupon/index',
         'submenu' => [
@@ -322,11 +295,6 @@ return [
             ],
         ],
     ],
-    'statistics' => [
-        'name' => '数据统计',
-        'icon' => 'icon-qushitu',
-        'index' => 'statistics.data/index',
-    ],
     'wxapp' => [
         'name' => '小程序',
         'icon' => 'icon-wxapp',
@@ -336,6 +304,10 @@ return [
             [
                 'name' => '小程序设置',
                 'index' => 'wxapp/setting',
+            ],
+            [
+                'name' => '授权绑定',
+                'index' => 'wxapp.wxopen/index',
             ],
             [
                 'name' => '页面管理',
@@ -378,14 +350,73 @@ return [
             ],
         ],
     ],
+    'website' => [
+        'name' => '网站',
+        'icon' => 'am-icon-windows',
+        'color' => '#00aeff',
+        'index' => 'website.setting/index',
+        'submenu' => [
+            [
+                'name' => '网站设置',
+                'index' => 'website.setting/index',
+            ],
+            [
+                'name' => '域名绑定',
+                'index' => 'website.domain/index',
+            ],
+            [
+                'name' => '页面管理',
+                'active' => true,
+                'submenu' => [
+                    [
+                        'name' => '页面设计',
+                        'index' => 'website.page/index',
+                        'uris' => [
+                            'website.page/index',
+                            'website.page/add',
+                            'website.page/edit',
+                        ]
+                    ],
+                    [
+                        'name' => '风格模板',
+                        'index' => 'website.skin/index'
+                    ],
+                    [
+                        'name' => '页面链接',
+                        'index' => 'website.page/links'
+                    ]
+                ]
+            ],
+            [
+                'name' => '导航设置',
+                'active' => false,
+                'submenu' => [
+                    [
+                        'name' => '顶部导航',
+                        'index' => 'website.menus/index',
+                        'uris' => [
+                            'website.menus/index',
+                            'website.menus/add',
+                            'website.menus/edit',
+                        ]
+                    ],
+                    [
+                        'name' => '底部导航',
+                        'index' => 'website.skin/index'
+                    ]
+                ]
+            ]
+        ],
+    ],
     'apps' => [
-        'name' => '应用中心',
+        'name' => '应用',
         'icon' => 'icon-application',
         'is_svg' => true,   // 多色图标
         'index' => 'apps.dealer.apply/index',
         'submenu' => [
             [
                 'name' => '分销中心',
+//                'active' => false,
                 'submenu' => [
                     [
                         'name' => '入驻申请',
@@ -568,6 +599,16 @@ return [
                 ]
             ],
             [
+                'name'=>'书画定制',
+                'index' => 'apps.custom/index',
+                'submenu' => [
+                    [
+                        'name' => '定制列表',
+                        'index' => 'apps.custom/index',
+                    ],
+                ]
+            ],
+            [
                 'name' => '小程序直播',
                 'index' => 'apps.live.room/index',
                 'submenu' => [
@@ -579,62 +620,82 @@ return [
             ],
         ]
     ],
+    'statistics' => [
+        'name' => '统计',
+        'icon' => 'icon-qushitu',
+        'index' => 'statistics.data/index',
+    ],
     'setting' => [
         'name' => '设置',
         'icon' => 'icon-setting',
         'index' => 'setting/store',
         'submenu' => [
             [
-                'name' => '商城设置',
+                'name' => '系统设置',
                 'index' => 'setting/store',
+                'submenu' => [
+                    [
+                        'name' => '系统设置',
+                        'index' => 'setting/store',
+                    ],
+                    [
+                        'name' => '交易设置',
+                        'index' => 'setting/trade',
+                    ],
+                    [
+                        'name' => '运费模板',
+                        'index' => 'setting.delivery/index',
+                        'uris' => [
+                            'setting.delivery/index',
+                            'setting.delivery/add',
+                            'setting.delivery/edit',
+                        ],
+                    ],
+                    [
+                        'name' => '物流公司',
+                        'index' => 'setting.express/index',
+                        'uris' => [
+                            'setting.express/index',
+                            'setting.express/add',
+                            'setting.express/edit',
+                        ],
+                    ],
+                    [
+                        'name' => '退货地址',
+                        'index' => 'setting.address/index',
+                        'uris' => [
+                            'setting.address/index',
+                            'setting.address/add',
+                            'setting.address/edit',
+                        ],
+                    ],
+                ]
             ],
             [
-                'name' => '交易设置',
-                'index' => 'setting/trade',
-            ],
-            [
-                'name' => '运费模板',
-                'index' => 'setting.delivery/index',
-                'uris' => [
-                    'setting.delivery/index',
-                    'setting.delivery/add',
-                    'setting.delivery/edit',
-                ],
-            ],
-            [
-                'name' => '物流公司',
-                'index' => 'setting.express/index',
-                'uris' => [
-                    'setting.express/index',
-                    'setting.express/add',
-                    'setting.express/edit',
-                ],
-            ],
-            [
-                'name' => '短信通知',
-                'index' => 'setting/sms'
-            ],
-            //    [
-            //        'name' => '模板消息',
-            //        'index' => 'setting/tplmsg',
-            //        'uris' => [
-            //            'setting/tplmsg',
-            //            'setting.help/tplmsg'
-            //
-            //        ],
-            //    ],
-            [
-                'name' => '退货地址',
-                'index' => 'setting.address/index',
-                'uris' => [
-                    'setting.address/index',
-                    'setting.address/add',
-                    'setting.address/edit',
-                ],
-            ],
-            [
-                'name' => '上传设置',
-                'index' => 'setting/storage',
+                'name' => '权限设置',
+                'index' => 'setting.website/index',
+                'submenu' => [
+                    [
+                        'name' => '员工账号',
+                        'index' => 'setting.user/index',
+                        'uris' => [
+                            'setting.user/index',
+                            'setting.user/add',
+                            'setting.user/edit',
+                            'setting.user/delete',
+                        ],
+                    ],
+                    [
+                        'name' => '角色管理',
+                        'index' => 'setting.role/index',
+                        'uris' => [
+                            'setting.role/index',
+                            'setting.role/add',
+                            'setting.role/edit',
+                            'setting.role/delete',
+                        ],
+                    ],
+                ]
             ],
             [
                 'name' => '小票打印机',
@@ -653,6 +714,27 @@ return [
                         'index' => 'setting/printer'
                     ]
                 ]
+            ],
+            //    [
+            //        'name' => '模板消息',
+            //        'index' => 'setting/tplmsg',
+            //        'uris' => [
+            //            'setting/tplmsg',
+            //            'setting.help/tplmsg'
+            //
+            //        ],
+            //    ],
+            [
+                'name' => '上传设置',
+                'index' => 'setting/storage',
+            ],
+            [
+                'name' => '短信通知',
+                'index' => 'setting/sms'
+            ],
+            [
+                'name' => '提交工单',
+                'index' => 'setting.workorder/index',
             ],
             [
                 'name' => '其他',

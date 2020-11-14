@@ -104,7 +104,7 @@
                                         <?= $item['recharge_type']['value'] == 10 ? 'am-badge-secondary' : 'am-badge-success' ?>">
                                                 <?= $item['recharge_type']['text'] ?></span>
                                     </td>
-                                    <td class="am-text-middle"><?= $item['order_plan']['plan_name'] ?: '--' ?></td>
+                                    <td class="am-text-middle"><?= !empty($item['order_plan']) ? $item['order_plan']['plan_name'] : '--' ?></td>
                                     <td class="am-text-middle"><?= $item['pay_price'] ?></td>
                                     <td class="am-text-middle"><?= $item['gift_money'] ?></td>
                                     <td class="am-text-middle">

@@ -56,12 +56,17 @@ class Menus
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function getMenus($routeUri, $group)
+    public function getMenus($routeUri, $group, $wxapp_id)
     {
+        $menus = Config::get($wxapp_id);
+        // 是否存在自定义的菜单
+        if(isset($menus) && !empty($menus)){
+            $this->first($menus, $routeUri, $group);
+            return $menus;
+        }
         // 菜单列表数据
         $menus = Config::get('menus');
         $this->first($menus, $routeUri, $group);
-//        pre($menus);
         return $menus;
     }
 
@@ -79,6 +84,7 @@ class Menus
         foreach ($menus as $key => &$first) :
             // 一级菜单索引url
             $indexData = $this->getMenusIndexUrls($first, 1);
+
             // 权限验证
             $first['index'] = $this->getAuthUrl($indexData);
             if ($first['index'] === false) {

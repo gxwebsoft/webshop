@@ -105,4 +105,18 @@ class User extends Controller
         $this->redirect($Qrcode->getImage());
     }
 
+    /**
+     * 独立二维码
+     * @param $dealer_id
+     * @throws \app\common\exception\BaseException
+     * @throws \think\exception\DbException
+     * @throws \Exception
+     */
+    public function qrcodeone($dealer_id)
+    {
+        $model = UserModel::detail($dealer_id);
+        $Qrcode = new Poster($model);
+        $this->redirect($Qrcode->getImageOne());
+    }
+
 }

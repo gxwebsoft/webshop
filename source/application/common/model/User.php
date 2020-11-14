@@ -3,7 +3,7 @@
 namespace app\common\model;
 
 use app\common\model\user\PointsLog as PointsLogModel;
-
+use app\common\model\store\shop\Clerk;
 /**
  * 用户模型类
  * Class User
@@ -52,6 +52,15 @@ class User extends BaseModel
     public function getGenderAttr($value)
     {
         return $this->gender[$value];
+    }
+
+    /**
+     * 关联收货地址表 (默认地址)
+     * @return \think\model\relation\BelongsTo
+     */
+    public function clerk()
+    {
+        return $this->belongsTo("app\\common\\model\\store\\shop\\Clerk",'user_id','user_id');
     }
 
     /**

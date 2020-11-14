@@ -2,6 +2,7 @@
 
 namespace app\admin\model;
 
+use app\common\model\User;
 use app\common\model\Wxapp as WxappModel;
 use app\admin\model\store\User as StoreUser;
 
@@ -20,7 +21,8 @@ class Wxapp extends WxappModel
      */
     public function getList($is_recycle = false)
     {
-        return $this->where('is_recycle', '=', (int)$is_recycle)
+        return $this->with('user')
+            ->where('is_recycle', '=', (int)$is_recycle)
             ->where('is_delete', '=', 0)
             ->order(['create_time' => 'desc'])
             ->paginate(15, false, [
@@ -57,6 +59,7 @@ class Wxapp extends WxappModel
             $this->error = '商家用户名已存在';
             return false;
         }
+        $data['expire_time'] = strtotime('+15month');
         return $this->transaction(function () use ($data) {
             // 添加小程序记录
             $this->allowField(true)->save($data);
@@ -97,5 +100,25 @@ class Wxapp extends WxappModel
             return $this->save(['is_delete' => 1]);
         });
     }
+
+    /**
+     * 过户操作
+     * @return false|int
+     */
+    public function transfer($param){
+
+//        if(!User::get($param['user_id'])){
+//            return false;
+//        }
+
+
+        // 时间操作
+        if($param['month'] != 0){
+            $this->setInc('expire_time', $param['month'] * 86400);
+        }
+
+        return $this->allowField(true)->save($param);
+    }
+
 
 }

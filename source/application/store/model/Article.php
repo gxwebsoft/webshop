@@ -18,7 +18,14 @@ class Article extends ArticleModel
      */
     public function getList()
     {
+
+
+        $filter = [];
+        $params = request()->param();
+        !empty($params['search']) && $filter['article_title|article_id'] = ['like', '%' . trim($params['search']) . '%'];
+        $params['category_id'] > 0 && $filter['category_id'] = $params['category_id'];
         return $this->with(['image', 'category'])
+            ->where($filter)
             ->where('is_delete', '=', 0)
             ->order(['article_sort' => 'asc', 'create_time' => 'desc'])
             ->paginate(15, false, [
@@ -42,6 +49,8 @@ class Article extends ArticleModel
             $this->error = '请输入文章内容';
             return false;
         }
+        // 文章摘要
+        $data['article_desc'] = get_article_desc($data['article_content']);
         $data['wxapp_id'] = self::$wxapp_id;
         return $this->allowField(true)->save($data);
     }

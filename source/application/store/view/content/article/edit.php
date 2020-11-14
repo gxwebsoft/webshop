@@ -23,10 +23,11 @@
                                             data-am-selected="{searchBox: 1, btnSize: 'sm',
                                              placeholder:'请选择', maxHeight: 400}">
                                         <option value=""></option>
-                                        <?php if (isset($catgory)): foreach ($catgory as $item): ?>
-                                            <option value="<?= $item['category_id'] ?>"
-                                                <?= $model['category_id'] == $item['category_id'] ? 'selected' : '' ?>><?= $item['name'] ?></option>
-                                        <?php endforeach; endif; ?>
+                                        <?php foreach ($list as $vo): ?>
+                                            <option value="<?= $vo['category_id'] ?>" <?= $model['category_id']==$vo['category_id']?'selected':'';?>>
+                                                <?=  $vo['name'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
                                     </select>
                                     <small class="am-margin-left-xs">
                                         <a href="<?= url('content.article.category/add') ?>">去添加</a>
@@ -51,6 +52,14 @@
                                     <div class="help-block am-padding-top-xs">
                                         <small>小图模式建议封面图尺寸：300 * 188，大图模式建议封面图尺寸：750 * 455</small>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-u-lg-2 am-form-label">文章摘要 </label>
+                                <div class="am-u-sm-9 am-u-end">
+                                    <input type="text" class="tpl-form-input" name="goods[selling_point]"
+                                           value="<?= $model['article_desc'] ?>">
+                                    <small>文章摘要，新增是自动截取，可编辑。</small>
                                 </div>
                             </div>
                             <div class="am-form-group">

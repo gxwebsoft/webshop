@@ -4,6 +4,7 @@ namespace app\api\controller\user;
 
 use app\api\controller\Controller;
 
+use think\Db;
 use app\api\model\Order as OrderModel;
 use app\api\model\Setting as SettingModel;
 use app\common\enum\OrderType as OrderTypeEnum;
@@ -59,6 +60,47 @@ class Order extends Controller
         $model['isAllowRefund'] = $model->isAllowRefund();
         return $this->renderSuccess([
             'order' => $model,  // 订单详情
+            'setting' => [
+                // 积分名称
+                'points_name' => SettingModel::getPointsName(),
+            ],
+        ]);
+    }
+
+    /**
+     * 订单详情信息
+     * @param $order_id
+     * @return array
+     * @throws \app\common\exception\BaseException
+     * @throws \think\exception\DbException
+     */
+    public function detail0($order_id)
+    {
+
+        // 订单详情
+        $model = OrderModel::getUserOrderDetail($order_id, $this->user['user_id']);
+
+       $str=  explode(" ",$model['create_time']);
+
+        $d=$model['create_time'];
+        $one=model('setting')->where('key','store')->where('wxapp_id',10211)->find();
+        $res = $one->toArray();
+        $time=$res['values']['fh']['key'];
+
+
+       if($str[1]>$time)
+       {
+           $text='第二天发货';
+       }else{
+           $text='当天发货';
+       }
+//        halt(date('Y-m-d H:i:s', $model['delivery_time']));
+        // 该订单是否允许申请售后
+       $model['isAllowRefund'] = $model->isAllowRefund();
+        return $this->renderSuccess([
+            'order' => $model,
+            'text'=>$text,
+            // 订单详情
             'setting' => [
                 // 积分名称
                 'points_name' => SettingModel::getPointsName(),

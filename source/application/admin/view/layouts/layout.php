@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>运营管理系统</title>
+    <title>Saas平台客户管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="icon" type="image/png" href="assets/common/i/favicon.ico"/>
     <meta name="apple-mobile-web-app-title" content="运营管理系统"/>
     <link rel="stylesheet" href="assets/common/css/amazeui.min.css"/>
-    <link rel="stylesheet" href="assets/admin/css/app.css"/>
+    <link rel="stylesheet" href="assets/admin/css/app.css?v=<?= $version ?>"/>
     <link rel="stylesheet" href="//at.alicdn.com/t/font_783249_c9du3u6ahxp.css">
     <script src="assets/common/js/jquery.min.js"></script>
     <script>
@@ -26,6 +25,10 @@
     <header class="tpl-header">
         <!-- 右侧内容 -->
         <div class="tpl-header-fluid">
+            <!-- 刷新页面 -->
+            <div class="am-fl">
+<!--                <span style="line-height: 3.4em;">新一代SaaS软件平台</span>-->
+            </div>
             <!-- 其它功能-->
             <div class="am-fr tpl-header-navbar">
                 <ul>
@@ -90,7 +93,7 @@
     <!-- 内容区域 end -->
 
     <div class="help-block am-text-center am-padding-sm">
-        <small>当前系统版本号：v<?= $version ?></small>
+        <small>版权所有：南宁市网宿信息科技有限公司 &nbsp;&nbsp; (当前系统版本号：v<?= $version ?>)</small>
     </div>
 </div>
 <script src="assets/common/plugins/layer/layer.js"></script>
@@ -98,7 +101,7 @@
 <script src="assets/common/js/amazeui.min.js"></script>
 <script src="assets/common/js/webuploader.html5only.js"></script>
 <script src="assets/common/js/art-template.js"></script>
-<script src="assets/admin/js/app.js"></script>
+<script src="assets/admin/js/app.js?v=<?= $version ?>"></script>
 </body>
 
 </html>

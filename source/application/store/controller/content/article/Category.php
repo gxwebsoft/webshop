@@ -19,7 +19,7 @@ class Category extends Controller
     public function index()
     {
         $model = new CategoryModel;
-        $list = $model->getAll();
+        $list = $model->catTree();
         return $this->fetch('index', compact('list'));
     }
 
@@ -31,7 +31,8 @@ class Category extends Controller
     {
         $model = new CategoryModel;
         if (!$this->request->isAjax()) {
-            return $this->fetch('add');
+            $list = $model->catTree();
+            return $this->fetch('add',compact('list'));
         }
         // 新增记录
         if ($model->add($this->postData('category'))) {
@@ -49,9 +50,10 @@ class Category extends Controller
     public function edit($category_id)
     {
         // 分类详情
-        $model = CategoryModel::detail($category_id);
+        $model = CategoryModel::get($category_id, ['image']);
         if (!$this->request->isAjax()) {
-            return $this->fetch('edit', compact('model'));
+            $list = $model->catTree();
+            return $this->fetch('edit', compact('model','list'));
         }
         // 更新记录
         if ($model->edit($this->postData('category'))) {
@@ -68,7 +70,7 @@ class Category extends Controller
      */
     public function delete($category_id)
     {
-        $model = CategoryModel::detail($category_id);
+        $model = CategoryModel::get($category_id);
         if (!$model->remove($category_id)) {
             return $this->renderError($model->getError() ?: '删除失败');
         }

@@ -38,12 +38,30 @@ class ExceptionHandler extends Handle
     }
 
     /**
+     * Report or log an exception.
+     *
+     * @param  \Exception $exception
+     * @return void
+     */
+    public function report(Exception $exception)
+    {
+        // 不使用内置的方式记录异常日志
+    }
+
+    /**
      * 将异常写入日志
      * @param Exception $e
      */
     private function recordErrorLog(Exception $e)
     {
-        Log::record($e->getMessage(), 'error');
-        Log::record($e->getTraceAsString(), 'error');
+        $data = [
+            'file'    => $e->getFile(),
+            'line'    => $e->getLine(),
+            'message' => $this->getMessage($e),
+            'code'    => $this->getCode($e),
+        ];
+        $log = "[{$data['code']}]{$data['message']} [{$data['file']}:{$data['line']}]";
+        $log .= "\r\n" . $e->getTraceAsString();
+        Log::record($log, 'error');
     }
 }

@@ -84,7 +84,16 @@
                 );
             });
         },
-
+        /**
+         * 预览
+         */
+        view: function (index){
+            $(this).click(function () {
+                var param = {};
+                param[index] = $(this).attr('data-id');
+                open('http://www.wsdns.cn/index.php?s=/article/detail/article_id/' + param[index] ,'_blank')
+            });
+        },
         /**
          * 选择图片文件
          * @param option
@@ -150,6 +159,7 @@
                 url: options.url,
                 data: options.data,
                 success: function (result) {
+                    console.log(result)
                     result.code === 1 ? $.show_success(result.msg, result.url)
                         : $.show_error(result.msg);
                 }

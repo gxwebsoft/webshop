@@ -140,7 +140,7 @@ class Goods extends BaseModel
         } elseif ($params['sortType'] === 'sales') {
             $sort = ['goods_sales' => 'desc'];
         } elseif ($params['sortType'] === 'price') {
-            $sort = $params['sortPrice'] ? ['goods_max_price' => 'desc'] : ['goods_min_price'];
+            $sort = $params['sortPrice'] ? ['goods_max_price' => 'desc'] : ['goods_min_price' => 'asc'];
         }
         // 商品表名称
         $tableName = $this->getTable();
@@ -163,6 +163,7 @@ class Goods extends BaseModel
             ->paginate($params['listRows'], false, [
                 'query' => \request()->request()
             ]);
+
         // 整理列表数据并返回
         return $this->setGoodsListData($list, true);
     }
@@ -178,6 +179,7 @@ class Goods extends BaseModel
     {
         if (!$isMultiple) $dataSource = [&$data]; else $dataSource = &$data;
         // 整理商品列表数据
+//        halt($dataSource->toArray());
         foreach ($dataSource as &$goods) {
             // 商品主图
             $goods['goods_image'] = $goods['image'][0]['file_path'];

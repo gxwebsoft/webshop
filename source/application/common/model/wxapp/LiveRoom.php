@@ -35,13 +35,13 @@ class LiveRoom extends BaseModel
 
     /**
      * 获取直播间详情
-     * @param $roomId
+     * @param int $id
      * @return static|null
      * @throws \think\exception\DbException
      */
-    public static function detail($roomId)
+    public static function detail($id)
     {
-        return static::get($roomId);
+        return static::get($id);
     }
 
 }

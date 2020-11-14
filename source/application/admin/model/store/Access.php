@@ -130,13 +130,4 @@ class Access extends AccessModel
         return $prefix;
     }
 
-    /**
-     * 新增默认权限
-     */
-    public function insertDefault()
-    {
-        $defaultData = $this->defaultData();
-        $this->buildData($defaultData);
-    }
-
 }

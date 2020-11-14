@@ -66,4 +66,9 @@ return [
         'app\\task\\behavior\\bargain\\Task'
     ],
 
+    // 检查域名解析
+    'domain_task' => [
+        'app\\task\\behavior\\website\\Domain'
+    ],
+
 ];
